@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kategoribarangs', function (Blueprint $table) {
-            $table->unsignedBigInteger('ID_KATEGORI')->primary();
+            $table->id('ID_KATEGORI');
             $table->string('NAMA_KATEGORI', 255);
-            $table->integer('JML_PRODUK', 11)->default(0);
-            $table->timestamps();
+            $table->integer('JML_BARANG')->default(0);
         });
     }
 

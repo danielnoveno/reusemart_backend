@@ -21,9 +21,11 @@ class KategoribarangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Manajemen Kategori Barang';
+    protected static ?string $navigationLabel = 'Kategori Barang';
 
-    public static ?string $label = 'Managemen Kategori Barang';
+    public static ?string $label = 'Kategori Barang';
+
+    protected static ?string $navigationGroup = 'Barang';
 
     public static function form(Form $form): Form
     {
@@ -34,17 +36,6 @@ class KategoribarangResource extends Resource
                     ->label('Nama Kategori')
                     ->placeholder('Masukkan Nama Kategori')
                     ->maxLength(255),
-                TextInput::make('JML_PRODUK')
-                    ->required()
-                    ->label('Jumlah Produk')
-                    ->placeholder('Masukkan Jumlah Produk')
-                    ->numeric()
-                    ->minValue(0)
-                    ->maxValue(10000)
-                    ->default(0)
-                    ->maxLength(11)
-                    ->dehydrateStateUsing(fn($state) => (int) $state)
-                    ->dehydrated(fn($state) => ! blank($state))
             ]);
     }
 
@@ -64,18 +55,10 @@ class KategoribarangResource extends Resource
                     ->placeholder('Masukkan Nama Kategori')
                     ->searchable()
                     ->toggleable(),
-                TextColumn::make('JML_PRODUK')
-                    ->label('Jumlah Produk')
+                TextColumn::make('JML_BARANG')
+                    ->label('Jumlah Barang')
                     ->sortable()
-                    ->placeholder('Masukkan Jumlah Produk')
-                    ->searchable()
-                    ->toggleable(),
-                TextColumn::make('created_at')
-                    ->label('Dibuat Pada')
-                    ->sortable()
-                    ->placeholder('Masukkan Tanggal Dibuat')
-                    ->dateTime()
-                    ->toggleable(),
+                    ->toggleable()
             ])
             ->filters([
                 //

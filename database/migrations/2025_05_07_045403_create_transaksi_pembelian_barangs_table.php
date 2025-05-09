@@ -12,7 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi_pembelian_barangs', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_TRANSAKSI_PEMBELIAN');
+            $table->unsignedBigInteger('ID_PEMBELI');
+            $table->string('BUKTI_TRANSFER', 255);
+            $table->date('TGL_AMBIL_KIRIM');
+            $table->date('TGL_LUNAS_PEMBELIAN');
+            $table->date('TGL_PESAN_PEMBELIAN');
+            $table->float('TOT_HARGA_PEMBELIAN');
+            $table->string('STATUS_TRANSAKSI', 255);
+            $table->string('DELIVERY_METHOD', 255);
+            $table->float('ONGKOS_KIRIM');
+            $table->integer('POIN_DIDAPAT');
+            $table->integer('POIN_POTONGAN');
+            $table->string('STATUS_TRANSAKSI_PEMBELIAN', 255);
+            $table->foreign('ID_PEMBELI')
+                ->references('ID_PEMBELI')
+                ->on('pembelis')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

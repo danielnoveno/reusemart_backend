@@ -12,7 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi_penitipan_barangs', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_TRANSAKSI_PENITIPAN');
+            $table->unsignedBigInteger('ID_PENITIP');
+            $table->date('TGL_MASUK_TITIPAN');
+            $table->date('TGL_KELUAR_TITIPAN');
+            $table->string('NO_NOTA_TRANSAKSI_TITIPAN', 255);
+            $table->foreign('ID_PENITIP')
+                ->references('ID_PENITIP')
+                ->on('penitips')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

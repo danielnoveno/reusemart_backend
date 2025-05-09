@@ -12,8 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('badges', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('ID_BADGE');
+            $table->unsignedBigInteger('ID_PENITIP');
+            $table->string('NAMA_BADGE', 255);
+            $table->date('START_DATE');
+            $table->date('END_DATE');
+            $table->foreign('ID_PENITIP')
+                ->references('ID_PENITIP')
+                ->on('penitips')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

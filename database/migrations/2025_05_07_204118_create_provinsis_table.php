@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jabatans', function (Blueprint $table) {
-            $table->unsignedBigInteger('ID_JABATAN')->primary();
-            $table->string('NAMA_JABATAN', 255);
-            $table->timestamps();
+        Schema::create('provinsis', function (Blueprint $table) {
+            $table->id('id_provinsi');
+            $table->string('nama_provinsi', 255);
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jabatans');
+        Schema::dropIfExists('provinsis');
     }
 };

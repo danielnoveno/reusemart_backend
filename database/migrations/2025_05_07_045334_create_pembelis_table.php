@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pembelis', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_PEMBELI');
+            $table->string('NAMA_PEMBELI', 255);
+            $table->date('TGL_LAHIR_PEMBELI');
+            $table->string('NO_TELP_PEMBELI', 25);
+            $table->string('EMAIL_PEMBELI', 255);
+            $table->string('PASSWORD_PEMBELI', 255);
+            $table->integer('POINT_LOYALITAS_PEMBELI')->default(0);
             $table->timestamps();
         });
     }

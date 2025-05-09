@@ -22,9 +22,11 @@ class MerchandiseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Manajemen Merchandise';
+    protected static ?string $navigationLabel = 'Merchandise';
 
-    public static ?string $label = 'Managemen Merchandise';
+    public static ?string $label = 'Merchandise';
+
+    protected static ?string $navigationGroup = 'Merchandise';
 
     public static function form(Form $form): Form
     {

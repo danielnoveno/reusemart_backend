@@ -12,8 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('alamats', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('ID_ALAMAT');
+            $table->unsignedBigInteger('ID_PEMBELI');
+            $table->string('JUDUL', 255);
+            $table->string('NAMA_JALAN', 255);
+            $table->string('DESA_KELURAHAN', 255);
+            $table->string('KECAMATAN', 255);
+            $table->string('KABUPATEN', 255);
+            $table->string('PROVINSI', 255);
+            $table->foreign('ID_PEMBELI')
+                ->references('ID_PEMBELI')
+                ->on('pembelis')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 

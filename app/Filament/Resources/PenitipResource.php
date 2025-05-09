@@ -23,9 +23,9 @@ class PenitipResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationLabel = 'Manajemen Penitip';
+    protected static ?string $navigationLabel = 'Penitip';
 
-    protected static ?string $navigationGroup = 'All User';
+    protected static ?string $navigationGroup = 'User';
 
     protected static ?string $slug = 'managemen-penitip';
 
@@ -91,28 +91,28 @@ class PenitipResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama_penitip')
+                TextColumn::make('NAMA_PENITIP')
                     ->searchable()
                     ->copyable()
                     ->label('Nama Penitip')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('NIK')
+                TextColumn::make('NO_KTP')
                     ->searchable()
                     ->label('NIK')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('no_hp_penitip')
+                TextColumn::make('NO_TELP_PENITIP')
                     ->searchable()
                     ->label('No HP')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('alamat_penitip')
+                TextColumn::make('ALAMAT_PENITIP')
                     ->searchable()
                     ->label('Alamat')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('email_penitip')
+                TextColumn::make('EMAIL_PENITIP')
                     ->searchable()
                     ->copyable()
                     ->label('Email')
@@ -129,7 +129,14 @@ class PenitipResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(function (Penitip $record) {
+                        $record->delete();
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Hapus Pegawai')
+                    ->label('Delete')
+                    ->modalHeading('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

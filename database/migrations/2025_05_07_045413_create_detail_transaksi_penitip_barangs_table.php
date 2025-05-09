@@ -12,7 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('detail_transaksi_penitip_barangs', function (Blueprint $table) {
-            $table->id();
+            $table->id('ID_DETAIL_TRANSAKSI_PENITIPAN');
+            $table->unsignedBigInteger('ID_TRANSAKSI_PENITIPAN');
+            $table->unsignedBigInteger('ID_BARANG');
+            $table->string('NAMA_BARANG', 255)->nullable();
+            $table->foreign('ID_TRANSAKSI_PENITIPAN')
+                ->references('ID_TRANSAKSI_PENITIPAN')
+                ->on('transaksi_penitipan_barangs')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreign('ID_BARANG')
+                ->references('ID_BARANG')
+                ->on('BARANGs')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

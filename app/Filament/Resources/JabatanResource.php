@@ -21,9 +21,11 @@ class JabatanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cog';
 
-    protected static ?string $navigationLabel = 'Manajemen Jabatan';
+    protected static ?string $navigationLabel = 'Jabatan';
 
-    public static ?string $label = 'Managemen Jabatan';
+    public static ?string $label = 'Jabatan';
+
+    protected static ?string $navigationGroup = 'User';
 
     public static function form(Form $form): Form
     {
@@ -53,6 +55,14 @@ class JabatanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(function (Jabatan $record) {
+                        $record->delete();
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Hapus Pegawai')
+                    ->label('Hapus')
+                    ->modalHeading('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

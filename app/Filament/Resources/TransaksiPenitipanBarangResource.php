@@ -3,15 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransaksiPenitipanBarangResource\Pages;
-use App\Filament\Resources\TransaksiPenitipanBarangResource\RelationManagers;
+use App\Models\Penitip;
 use App\Models\TransaksiPenitipanBarang;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Facades\Date;
 
 class TransaksiPenitipanBarangResource extends Resource
 {
@@ -19,11 +24,35 @@ class TransaksiPenitipanBarangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static ?string $label = 'Transaiksi Penitipan Barang';
+
+    protected static ?string $navigationGroup = 'Transaksi';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Select::make('ID_PENITIP')
+                    ->label('Penitip')
+                    ->options(Penitip::all()->pluck('NAMA_PENITIP', 'ID_PENITIP'))
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
+                    ->columnSpanFull(),
+                DatePicker::make('TGL_MASUK_TITIPAN')
+                    ->required()
+                    ->label('Tanggal Masuk Titipan')
+                    ->placeholder('Pilih Tanggal Masuk Titipan'),
+                DatePicker::make('TGL_KELUAR_TITIPAN')
+                    ->required()
+                    ->label('Tanggal Keluar Titipan')
+                    ->placeholder('Pilih Tanggal Keluar Titipan'),
+                TextInput::make('NO_NOTA_TRANSAKSI_TITIPAN')
+                    ->label('No. Nota Transaksi')
+                    ->disabled()
+                    ->dehydrated()
+                    ->hiddenOn('create'),
             ]);
     }
 
@@ -31,13 +60,41 @@ class TransaksiPenitipanBarangResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('ID_TRANSAKSI_PENITIPAN')
+                    ->label('ID Transaksi Penitipan')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('penitip.NAMA_PENITIP')
+                    ->label('Nama Penitip')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('TGL_MASUK_TITIPAN')
+                    ->label('Tanggal Masuk Titipan')
+                    ->dateTime()
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('TGL_KELUAR_TITIPAN')
+                    ->label('Tanggal Keluar Titipan')
+                    ->dateTime()
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('NO_NOTA_TRANSAKSI_TITIPAN')
+                    ->label('Nomor Nota Transaksi Titipan')
+                    ->sortable()
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(function (TransaksiPenitipanBarang $record) {
+                        $record->delete();
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Hapus Transaksi Penitipan Barang')
+                    ->label('Apakah Anda yakin ingin menghapus transaksi ini?')
+                    ->modalHeading('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -22,11 +22,11 @@ class AdminResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench';
 
-    protected static ?string $navigationLabel = 'Manajemen Admin';
+    protected static ?string $navigationLabel = 'Admin';
 
-    public static ?string $label = 'Managemen Admin';
+    public static ?string $label = 'Admin';
 
-    protected static ?string $navigationGroup = 'All User';
+    protected static ?string $navigationGroup = 'User';
 
     public static function form(Form $form): Form
     {
@@ -81,7 +81,14 @@ class AdminResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(function (Admin $record) {
+                        $record->delete();
+                    })
+                    ->requiresConfirmation()
+                    ->modalHeading('Hapus Pegawai')
+                    ->label('Hapus')
+                    ->modalHeading('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

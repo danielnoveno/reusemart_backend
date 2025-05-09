@@ -12,9 +12,20 @@ class Kategoribarang extends Model
     protected $table = 'kategoribarangs';
     protected $primaryKey = 'ID_KATEGORI';
     public $timestamps = false;
+    protected $appends = ['JML_BARANG'];
 
     protected $fillable = [
         'NAMA_KATEGORI',
         'JML_PRODUK',
     ];
+
+    public function produks()
+    {
+        return $this->hasMany(Barang::class, 'ID_KATEGORI', 'ID_KATEGORI');
+    }
+
+    public function getJMLBARANGAttribute()
+    {
+        return $this->produks()->count();
+    }
 }

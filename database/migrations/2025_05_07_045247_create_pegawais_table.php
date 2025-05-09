@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pegawais', function (Blueprint $table) {
-            $table->unsignedBigInteger('ID_PEGAWAI')->primary();
+            $table->id('ID_PEGAWAI');
             $table->unsignedBigInteger('ID_JABATAN');
             $table->string('NAMA_PEGAWAI', 255);
             $table->string('NO_TELP_PEGAWAI', 25);
             $table->string('EMAIL_PEGAWAI', 255)->unique();
             $table->string('PASSWORD_PEGAWAI', 255);
-            $table->float('KOMISI_PEGAWAI');
-
+            $table->float('KOMISI_PEGAWAI')->default(0);
             $table->foreign('ID_JABATAN')
                 ->references('ID_JABATAN')
                 ->on('jabatans')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 
